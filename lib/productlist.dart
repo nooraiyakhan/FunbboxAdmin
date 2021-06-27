@@ -145,6 +145,17 @@ class _ProductlistState extends State<Productlist> {
       );
     }
   }
+  
+  Future deleteLaptopInfo(payLoad) async {
+    print("hit");
+    final response = await http.post(delMobileEndPoint, body: payLoad);
+    print("response");
+    print(response);
+    int statusCode = response.statusCode;
+    print(statusCode);
+    String bodyResponse = response.body;
+    print(bodyResponse);
+  } 
 
   @override
   Widget build(BuildContext context) {
@@ -1261,6 +1272,34 @@ class _ProductlistState extends State<Productlist> {
                                                                             fontSize: 10,fontWeight: FontWeight.w300)))
                                                               ],
                                                             ),
+                                                            GestureDetector(
+                                                              onTap: (){
+                                                                setState(() {
+                                                                  laptopitemList.removeAt(index);
+                                                                  print(laptopitemList[index]['id']);
+                                                                });
+                                                                deleteLaptopInfo({"id":laptopitemList[index]['id'].toString()});
+                                                              },
+                                                              child: Container(
+                                                                      padding:
+                                                                          EdgeInsets
+                                                                              .all(
+                                                                                  5),
+                                                                      decoration: BoxDecoration(
+                                                                          color: Colors
+                                                                                  .redAccent,
+                                                                          borderRadius:
+                                                                              BorderRadiusDirectional.circular(
+                                                                                  5)),
+                                                                      child: Text(
+                                                                          "Delete",
+                                                                          style: TextStyle(
+                                                                              color:
+                                                                                  Colors.white,
+                                                                              fontSize: 10,fontWeight: FontWeight.w300))),
+                                                            ),
+                                                              
+                                                            
                                                             Container(
                                                                 padding: EdgeInsets
                                                                     .only(
@@ -1431,55 +1470,55 @@ class _ProductlistState extends State<Productlist> {
                                                                   
                                                                   ],
                                                                 )),
-                                                            Container(
-                                                              margin: EdgeInsets
-                                                                  .only(
-                                                                      top: 5,
-                                                                      left: 8),
-                                                              child: Container(
-                                                                  margin: EdgeInsets
-                                                                      .only(
-                                                                          left:
-                                                                              5),
-                                                                  child:
-                                                                      RatingBar(
-                                                                    initialRating:
-                                                                        laptopitemList[index]
-                                                                            [
-                                                                            'rating'],
-                                                                    minRating:
-                                                                        1,
-                                                                    direction: Axis
-                                                                        .horizontal,
-                                                                    allowHalfRating:
-                                                                        true,
-                                                                    ignoreGestures:
-                                                                        true,
-                                                                    itemCount:
-                                                                        5,
-                                                                    itemSize:
-                                                                        18,
-                                                                    itemPadding:
-                                                                        EdgeInsets.symmetric(
-                                                                            horizontal:
-                                                                                0.1),
-                                                                    // itemBuilder:
-                                                                    //     (context,
-                                                                    //             _) =>
-                                                                    //         Icon(
-                                                                    //   Icons
-                                                                    //       .star,
-                                                                    //   color: Colors
-                                                                    //       .amber,
-                                                                    //   size: 15,
-                                                                    // ),
-                                                                    // onRatingUpdate:
-                                                                    //     (rating) {
-                                                                    //   print(
-                                                                    //       rating);
-                                                                    // },
-                                                                  )),
-                                                            )
+                                                            // Container(
+                                                            //   margin: EdgeInsets
+                                                            //       .only(
+                                                            //           top: 5,
+                                                            //           left: 8),
+                                                            //   child: Container(
+                                                            //       margin: EdgeInsets
+                                                            //           .only(
+                                                            //               left:
+                                                            //                   5),
+                                                            //       child:
+                                                            //           RatingBar(
+                                                            //         initialRating:
+                                                            //             itemList[index]
+                                                            //                 [
+                                                            //                 'rating'],
+                                                            //         minRating:
+                                                            //             1,
+                                                            //         direction: Axis
+                                                            //             .horizontal,
+                                                            //         allowHalfRating:
+                                                            //             true,
+                                                            //         ignoreGestures:
+                                                            //             true,
+                                                            //         itemCount:
+                                                            //             5,
+                                                            //         itemSize:
+                                                            //             18,
+                                                            //         itemPadding:
+                                                            //             EdgeInsets.symmetric(
+                                                            //                 horizontal:
+                                                            //                     0.1),
+                                                            //         itemBuilder:
+                                                            //             (context,
+                                                            //                     _) =>
+                                                            //                 Icon(
+                                                            //           Icons
+                                                            //               .star,
+                                                            //           color: Colors
+                                                            //               .amber,
+                                                            //           size: 15,
+                                                            //         ),
+                                                            //         onRatingUpdate:
+                                                            //             (rating) {
+                                                            //           print(
+                                                            //               rating);
+                                                            //         },
+                                                            //       )),
+                                                            // )
                                                           ],
                                                         ),
                                                       ),

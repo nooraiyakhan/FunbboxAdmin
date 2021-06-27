@@ -1,6 +1,7 @@
 import 'package:dropdownfield/dropdownfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:image_picker/image_picker.dart';
 import 'main.dart';
 import 'dart:io';
 import 'package:http/http.dart' as http;
@@ -12,7 +13,19 @@ class Addwatch extends StatefulWidget {
 }
 
 class _AddwatchState extends State<Addwatch> {
- 
+   var image;
+  List<File> imageArray = [];
+  _openGallery() async {
+    if (imageArray.length < 5) {
+      image = await ImagePicker.platform.pickImage(source: ImageSource.gallery);
+      File file = File(image.path);
+      imageArray.add(file);
+      setState(() {
+        print(imageArray);
+      });
+    }
+  }
+  
   bool isNameBlank = false;
  
   bool isConditionBlank = false;
@@ -610,7 +623,73 @@ class _AddwatchState extends State<Addwatch> {
                                               ),
                                               border: InputBorder.none),
                                         )),
-                                             
+                                            SizedBox(
+                                      height: 20,
+                                    ),
+                                    imageArray.length == 5
+                                        ? Container()
+                                        : Container(
+                                            child: FlatButton(
+                                              onPressed: () {
+                                                _openGallery();
+                                              },
+                                              splashColor: Colors.white,
+                                              child: Center(
+                                                child: Text(
+                                                    "Open Gallery (Max no. 5)"),
+                                              ),
+                                            ),
+                                          ),
+                                    Container(
+                                        child: imageArray.length == 0
+                                            ? Center(
+                                                child: Text("No image found"),
+                                              )
+                                            : Wrap(
+                                                children: List.generate(
+                                                    imageArray.length, (index) {
+                                                  var img = imageArray[index];
+                                                  return Card(
+                                                    elevation: 1,
+                                                    child: Container(
+                                                      margin: EdgeInsets.only(
+                                                          top: 10, bottom: 10),
+                                                      child: Column(
+                                                        children: [
+                                                          Container(
+                                                            child: Image.file(
+                                                              img,
+                                                              height: 150,
+                                                              width: 150,
+                                                            ),
+                                                          ),
+                                                          SizedBox(height: 10),
+                                                          GestureDetector(
+                                                            onTap: () {
+                                                              setState(() {
+                                                                imageArray
+                                                                    .removeAt(
+                                                                        index);
+                                                              });
+                                                            },
+                                                            child: Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .all(5.0),
+                                                              child: Text(
+                                                                "Remove",
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .red),
+                                                              ),
+                                                            ),
+                                                          )
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  );
+                                                }),
+                                              )),   
                                     SizedBox(
                                       height: 10,
                                     ),
